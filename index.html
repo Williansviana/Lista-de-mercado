@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Compras</title>
+    <style>
+
+      
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #218838;
+           
+            
+            
+        }
+
+        img{
+            width: 100%;
+            
+            
+        }
+        .container {
+            width: 100%;
+            max-width: 600px;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-color: gray;
+            
+            
+                        
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 10px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .input-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        input[type="text"], input[type="number"] {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            width: 100%;
+        }
+        .add-btn, .clear-btn {
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+        }
+        .add-btn:hover {
+            background-color: #218838;
+        }
+        .clear-btn {
+            background-color: #dc3545;
+        }
+        .clear-btn:hover {
+            background-color: #c82333;
+        }
+    </style>
+</head>
+<body>
+
+ 
+
+<div class="container"> 
+
+    <h2>Lista de Compras</h2>
+       
+    <div class="input-group">
+        <input type="text" id="item" placeholder="Nome do item">
+        <input type="number" id="quantity" placeholder="Quantidade" min="1" value="1">
+        <input type="number" id="unitPrice" placeholder="Valor" min="0" step="0.01">
+    </div>
+    
+    <button class="add-btn" onclick="addItem()">Adicionar Item</button>
+    <button class="clear-btn" onclick="clearList()">Limpar Lista</button>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>Item</th>
+                <th>Quantidade</th>
+                <th>Valor Unitário</th>
+                <th>Total</th>
+                <th>Ação</th>
+            </tr>
+        </thead>
+        <tbody id="itemList">
+            <!-- Itens adicionados serão exibidos aqui -->
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="3"><strong>Valor Total:</strong></td>
+                <td colspan="2" id="grandTotal">R$ 0.00</td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+
+<script>
+    function addItem() {
+        const itemName = document.getElementById("item").value;
+        const quantity = parseFloat(document.getElementById("quantity").value);
+        const unitPrice = parseFloat(document.getElementById("unitPrice").value);
+
+        if (itemName && quantity > 0 && unitPrice >= 0) {
+            const total = quantity * unitPrice;
+            const tableRow = document.createElement("tr");
+
+            tableRow.innerHTML = `
+                <td>${itemName}</td>
+                <td>${quantity}</td>
+                <td>R$ ${unitPrice.toFixed(2)}</td>
+                <td>R$ ${total.toFixed(2)}</td>
+                <td><button onclick="removeItem(this, ${total})">Remover</button></td>
+            `;
+
+            document.getElementById("itemList").appendChild(tableRow);
+            updateGrandTotal(total);
+
+            // Limpar os campos após adicionar
+            document.getElementById("item").value = "";
+            document.getElementById("quantity").value = 1;
+            document.getElementById("unitPrice").value = "";
+        } else {
+            alert("Por favor, preencha todos os campos corretamente.");
+        }
+    }
+
+    function removeItem(button, itemTotal) {
+        const row = button.parentElement.parentElement;
+        row.remove();
+        updateGrandTotal(-itemTotal);
+    }
+
+    function updateGrandTotal(change) {
+        const grandTotalElem = document.getElementById("grandTotal");
+        let currentTotal = parseFloat(grandTotalElem.textContent.replace("R$", "").replace(",", "."));
+        const updatedTotal = currentTotal + change;
+        grandTotalElem.textContent = "R$ " + updatedTotal.toFixed(2);
+    }
+
+    function clearList() {
+        document.getElementById("itemList").innerHTML = "";
+        document.getElementById("grandTotal").textContent = "R$ 0.00";
+    }
+</script>
+
+</body>
+</html>
