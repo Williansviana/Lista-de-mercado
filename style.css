@@ -1,0 +1,132 @@
+      
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    background-color: #218838;
+   
+    
+    
+}
+
+.foto{
+    
+    z-index: -1;
+    position: absolute;
+    
+        
+}
+
+img{
+    height: 100vh;
+    bottom: 0%;
+    left: 0;
+    top: 0;
+    
+    
+}
+.container {
+    width: 100%;
+    max-width: 600px;
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: gray;
+   
+   
+     
+                
+}
+
+h2 {
+    text-align: center;
+    color: #333;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+th, td {
+    padding: 10px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+th {
+    background-color: #f2f2f2;
+}
+
+
+.input-group {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+input[type="text"], input[type="number"] {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    width: 100%;
+}
+.add-btn, .clear-btn {
+    padding: 10px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 10px;
+}
+.add-btn:hover {
+    background-color: #218838;
+}
+.clear-btn {
+    background-color: #dc3545;
+}
+.clear-btn:hover {
+    background-color: #c82333;
+}
+
+/* Responsivo para Celulares iphone*/
+
+
+@media (max-width: 740px) {
+
+    .container {
+        width: 80%;
+        max-width: 600px;
+        background: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        background-color: gray;
+                             
+    }
+    
+
+    th, td {
+        padding: 5px;
+        text-align: center;
+        border-bottom: 1px solid #ddd;
+        font-size: 10px;
+        border: none;
+        
+    }
+}
+input[type="text"], input[type="number"] {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    width: 100%;
+    padding-left: 5px;
+    font-size: 12px;
+}
+    
+
+
+
