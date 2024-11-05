@@ -48,54 +48,9 @@
     </table>
 </div>
 
-<script>
-    function addItem() {
-        const itemName = document.getElementById("item").value;
-        const quantity = parseFloat(document.getElementById("quantity").value);
-        const unitPrice = parseFloat(document.getElementById("unitPrice").value);
 
-        if (itemName && quantity > 0 && unitPrice >= 0) {
-            const total = quantity * unitPrice;
-            const tableRow = document.createElement("tr");
-
-            tableRow.innerHTML = `
-                <td>${itemName}</td>
-                <td>${quantity}</td>
-                <td>R$ ${unitPrice.toFixed(2)}</td>
-                <td>R$ ${total.toFixed(2)}</td>
-                <td><button onclick="removeItem(this, ${total})">Remover</button></td>
-            `;
-
-            document.getElementById("itemList").appendChild(tableRow);
-            updateGrandTotal(total);
-
-            // Limpar os campos após adicionar
-            document.getElementById("item").value = "";
-            document.getElementById("quantity").value = 1;
-            document.getElementById("unitPrice").value = "";
-        } else {
-            alert("Por favor, preencha todos os campos corretamente.");
-        }
-    }
-
-    function removeItem(button, itemTotal) {
-        const  row = button.parentElement.parentElement ;
-        row. remove();
-        updateGrandTotal(-itemTotal);
-    }
-
-    function updateGrandTotal(change) {
-        const grandTotalElem = document.getElementById("grandTotal");
-        let currentTotal = parseFloat(grandTotalElem.textContent.replace("R$", "").replace(",", "."));
-        const updatedTotal = currentTotal + change;
-        grandTotalElem.textContent = "R$ " + updatedTotal.toFixed(2);
-    }
-
-    function clearList() {
-        document.getElementById("itemList").innerHTML = "";
-        document.getElementById("grandTotal").textContent = "R$ 0.00";
-    }
-</script>
 
 </body>
+<script src="./script.js"></script>
+
 </html>
