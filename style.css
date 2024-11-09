@@ -91,7 +91,7 @@ input[type="number"] {
 }
 
 .add-btn,
-.clear-btn {
+.clear-btn,.download-btn {
     padding: 10px;
     background-color: #28a745;
     color: white;
@@ -166,6 +166,13 @@ input[type="number"] {
 
 .download-btn:hover {
     background-color: #0056b3;
+}
+
+/*alinhar os botoes*/
+
+.caixa{
+    display: flex;
+    gap: 10px;
 }
 
 
