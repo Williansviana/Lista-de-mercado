@@ -201,13 +201,13 @@ input[type="number"] {
     background-color: #007bff;
 }
 
-@media (max-width: 667px) {
+@media (max-width: 370px) {
 
     .add-btn,
 .clear-btn,.download-btn {
    padding: 8px;
     background-color: #28a745;
-    font-size: 11px;
+    font-size: 10px;
           
 }
 
@@ -217,6 +217,18 @@ input[type="number"] {
 
 .download-btn{
     background-color: #007bff;
+}
+
+
+
+input[type="text"],
+input[type="number"] {
+    padding: 6px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    width: 100%;
+    padding-left: 4px;
+    font-size: 11px;
 }
 
 }
