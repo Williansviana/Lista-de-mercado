@@ -152,7 +152,7 @@ input[type="number"] {
     font-size: 12px;
 }
 
-
+/*Comando para Download*/
 
 .download-btn {
     background-color: #007bff;
@@ -169,16 +169,3 @@ input[type="number"] {
 }
 
 
-.whatsapp-btn {
-    background-color: #25D366;
-    color: white;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    margin-top: 10px;
-}
-
-.whatsapp-btn:hover {
-    background-color: #1EBE5B;
-}

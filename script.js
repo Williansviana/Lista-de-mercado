@@ -89,6 +89,8 @@ function clearList() {
     localStorage.removeItem("listaDeCompras");
 }
 
+// Download pdf 
+
 function downloadPDF() {
     // Inicializar o jsPDF
     const { jsPDF } = window.jspdf;
@@ -134,35 +136,3 @@ function downloadPDF() {
     doc.save("Lista_de_Compras.pdf");
 }
 
-//adicionar link whatsapp
-
-function shareToWhatsApp() {
-    let message = "Lista de Compras:\n\n"; // Cabeçalho da mensagem
-
-    // Percorre cada item na lista e formata para o WhatsApp
-    const rows = document.querySelectorAll("#itemList tr");
-    rows.forEach(row => {
-        const columns = row.querySelectorAll("td");
-        if (columns.length === 5) { // Se tem 5 colunas (excluindo o botão)
-            const item = columns[0].textContent;
-            const quantity = columns[1].textContent;
-            const unitPrice = columns[2].textContent;
-            const total = columns[3].textContent;
-
-            message += '* ${ item }*\n';
-            message += 'Quantidade: ${ quantity } \n';
-            message += 'Valor Unitário: ${ unitPrice } \n';
-            message += 'Total: ${ total } \n\n';
-        }
-    });
-
-    // Adiciona o valor total da lista
-    const grandTotal = document.getElementById("grandTotal").textContent;
-    message += '* Valor Total:* ${ grandTotal } \n';
-
-    // Codifica a mensagem para a URL do WhatsApp
-    const whatsappURL = 'https://wa.me/?text=${encodeURIComponent(message)}';
-
-        // Abre o link no WhatsApp
-        window.open(whatsappURL, "_blank");
-}
