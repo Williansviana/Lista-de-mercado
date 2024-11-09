@@ -201,4 +201,23 @@ input[type="number"] {
     background-color: #007bff;
 }
 
+@media (max-width: 667px) {
+
+    .add-btn,
+.clear-btn,.download-btn {
+   padding: 8px;
+    background-color: #28a745;
+    font-size: 11px;
+          
+}
+
+.clear-btn{
+    background-color: #dc3545;
+}
+
+.download-btn{
+    background-color: #007bff;
+}
+
+}
 
