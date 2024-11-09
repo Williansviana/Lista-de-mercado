@@ -88,6 +88,7 @@ input[type="number"] {
     border: 1px solid #ddd;
     border-radius: 4px;
     width: 100%;
+    
 }
 
 .add-btn,
@@ -116,6 +117,31 @@ input[type="number"] {
 
 /* Responsivo para Celulares iphone*/
 
+
+
+
+/*Comando para Download*/
+
+.download-btn {
+    background-color: #007bff;
+    border: none;
+    border-radius: 4px;
+    color: #fff;
+    padding: 10px 15px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.download-btn:hover {
+    background-color: #0056b3;
+}
+
+/*alinhar os botoes*/
+
+.caixa{
+    display: flex;
+    gap: 10px;
+}
 
 @media (max-width: 740px) {
 
@@ -152,27 +178,27 @@ input[type="number"] {
     font-size: 12px;
 }
 
-/*Comando para Download*/
-
-.download-btn {
-    background-color: #007bff;
-    border: none;
-    border-radius: 4px;
-    color: #fff;
-    padding: 10px 15px;
-    cursor: pointer;
-    margin-top: 10px;
-}
-
-.download-btn:hover {
-    background-color: #0056b3;
-}
-
-/*alinhar os botoes*/
-
-.caixa{
+.input-group {
     display: flex;
-    gap: 10px;
+    gap: 8px;
+    margin-top: 10px;
+    
+}
+
+.add-btn,
+.clear-btn,.download-btn {
+   padding: 8px;
+    background-color: #28a745;
+    font-size: 12px;
+          
+}
+
+.clear-btn{
+    background-color: #dc3545;
+}
+
+.download-btn{
+    background-color: #007bff;
 }
 
 
