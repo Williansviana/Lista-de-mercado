@@ -151,3 +151,34 @@ input[type="number"] {
     padding-left: 5px;
     font-size: 12px;
 }
+
+
+
+.download-btn {
+    background-color: #007bff;
+    border: none;
+    border-radius: 4px;
+    color: #fff;
+    padding: 10px 15px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.download-btn:hover {
+    background-color: #0056b3;
+}
+
+
+.whatsapp-btn {
+    background-color: #25D366;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.whatsapp-btn:hover {
+    background-color: #1EBE5B;
+}

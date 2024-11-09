@@ -88,3 +88,81 @@ function clearList() {
     document.getElementById("grandTotal").textContent = "R$ 0.00";
     localStorage.removeItem("listaDeCompras");
 }
+
+function downloadPDF() {
+    // Inicializar o jsPDF
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+
+    // Título do PDF
+    doc.setFontSize(18);
+    doc.text("Lista de Compras", 10, 10);
+
+    // Configurações de posição para a tabela
+    let y = 20;
+    doc.setFontSize(12);
+
+    // Cabeçalhos da tabela
+    doc.text("Item", 10, y);
+    doc.text("Quantidade", 60, y);
+    doc.text("Valor Unitário", 110, y);
+    doc.text("Total", 160, y);
+
+    y += 10;
+
+    // Adicionar os itens da lista ao PDF
+    const rows = document.querySelectorAll("#itemList tr");
+    rows.forEach((row) => {
+        const columns = row.querySelectorAll("td");
+        if (columns.length === 5) { // Se tem 5 colunas (excluindo o botão)
+            doc.text(columns[0].textContent, 10, y);  // Nome do item
+            doc.text(columns[1].textContent, 60, y);  // Quantidade
+            doc.text(columns[2].textContent, 110, y); // Valor Unitário
+            doc.text(columns[3].textContent, 160, y); // Total
+            y += 10;
+        }
+    });
+
+    // Adicionar o valor total geral ao PDF
+    const grandTotal = document.getElementById("grandTotal").textContent;
+    y += 10;
+    doc.setFontSize(14);
+    doc.text("Valor Total:", 110, y);
+    doc.text(grandTotal, 160, y);
+
+    // Salvar o PDF
+    doc.save("Lista_de_Compras.pdf");
+}
+
+//adicionar link whatsapp
+
+function shareToWhatsApp() {
+    let message = "Lista de Compras:\n\n"; // Cabeçalho da mensagem
+
+    // Percorre cada item na lista e formata para o WhatsApp
+    const rows = document.querySelectorAll("#itemList tr");
+    rows.forEach(row => {
+        const columns = row.querySelectorAll("td");
+        if (columns.length === 5) { // Se tem 5 colunas (excluindo o botão)
+            const item = columns[0].textContent;
+            const quantity = columns[1].textContent;
+            const unitPrice = columns[2].textContent;
+            const total = columns[3].textContent;
+
+            message += '* ${ item }*\n';
+            message += 'Quantidade: ${ quantity } \n';
+            message += 'Valor Unitário: ${ unitPrice } \n';
+            message += 'Total: ${ total } \n\n';
+        }
+    });
+
+    // Adiciona o valor total da lista
+    const grandTotal = document.getElementById("grandTotal").textContent;
+    message += '* Valor Total:* ${ grandTotal } \n';
+
+    // Codifica a mensagem para a URL do WhatsApp
+    const whatsappURL = 'https://wa.me/?text=${encodeURIComponent(message)}';
+
+        // Abre o link no WhatsApp
+        window.open(whatsappURL, "_blank");
+}
