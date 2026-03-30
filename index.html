@@ -1,63 +1,100 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <link rel="shortcut icon" href="./img/favicon.ico" type="image/x-icon">
-    <title>Lista de Compras</title>
-    <!-- Adicionando jsPDF -->
+    <title>Lista de Compras - Viana</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
-
 </head>
-
-
-
 <body>
-
-
     <div class="container">
-
-        <h2>Lista de Compra</h2>
-
+        <h2>Lista de Compras</h2>
+        
         <div class="input-group">
-            <input type="text" id="item" placeholder="Nome do item">
-            <input type="number" id="quantity" placeholder="Quantidade" min="1" value="1">
-            <input type="number" id="unitPrice" placeholder="Valor" min="0" step="0.01">
+            <select id="item">
+                <option value="" disabled selected>Selecione um item</option>
+                <optgroup label="Doces & Chocolates">
+                    <option value="Caixa de Bombom">Caixa de Bombom</option>
+                    <option value="Chocolate ao Leite">Chocolate ao Leite</option>
+                    <option value="Chocolate Meio Amargo">Chocolate Meio Amargo</option>
+                    <option value="Chocolate Branco">Chocolate Branco</option>
+                    <option value="Achocolatado">Achocolatado</option>
+                </optgroup>
+                <optgroup label="Padaria & Matinal">
+                    <option value="Pão Francês">Pão Francês</option>
+                    <option value="Pão de Forma">Pão de Forma</option>
+                    <option value="Biscoito Recheado">Biscoito Recheado</option>
+                    <option value="Biscoito Salgado">Biscoito Salgado</option>
+                    <option value="Café">Café</option>
+                    <option value="Bolo">Bolo</option>
+                </optgroup>
+                <optgroup label="Mercearia & Base">
+                    <option value="Arroz">Arroz</option>
+                    <option value="Feijão">Feijão</option>
+                    <option value="Açúcar">Açúcar</option>
+                    <option value="Óleo">Óleo</option>
+                    <option value="Macarrão">Macarrão</option>
+                    <option value="Sal Refinado">Sal Refinado</option>
+                    <option value="Sal Grosso">Sal Grosso</option>
+                    <option value="Farinha">Farinha</option>
+                </optgroup>
+                <optgroup label="Laticínios & Ovos">
+                    <option value="Leite">Leite</option>
+                    <option value="Queijo">Queijo</option>
+                    <option value="Manteiga">Manteiga</option>
+                    <option value="Iogurte">Iogurte</option>
+                    <option value="Ovos">Ovos</option>
+                </optgroup>
+                <optgroup label="Higiene & Limpeza">
+                    <option value="Detergente">Detergente</option>
+                    <option value="Sabão em Pó">Sabão em Pó</option>
+                    <option value="Amaciante">Amaciante</option>
+                    <option value="Papel Higiênico">Papel Higiênico</option>
+                    <option value="Shampoo">Shampoo</option>
+                    <option value="Sabonete">Sabonete</option>
+                </optgroup>
+                <optgroup label="Hortifruti & Bebidas">
+                    <option value="Banana">Banana</option>
+                    <option value="Batata">Batata</option>
+                    <option value="Cebola/Alho">Cebola/Alho</option>
+                    <option value="Refrigerante">Refrigerante</option>
+                    <option value="Água Mineral">Água Mineral</option>
+                    <option value="Cerveja">Cerveja</option>
+                </optgroup>
+            </select>
+            <input type="number" id="quantity" placeholder="Qtd" min="1" value="1">
+            <input type="number" id="unitPrice" placeholder="R$" min="0" step="0.01">
         </div>
 
         <div class="caixa">
-            <button class="add-btn" onclick="addItem()">Adicionar Item</button>
-            <button class="clear-btn" onclick="clearList()">Limpar Lista</button>
-            <button class="download-btn" onclick="downloadPDF()">Baixar Lista</button>
+            <button class="add-btn" onclick="addItem()">Adicionar</button>
+            <button class="clear-btn" onclick="clearList()">Limpar</button>
+            <button class="download-btn" onclick="downloadPDF()">PDF</button>
         </div>
 
-        <table>
-            <thead>
-                <tr>
-                    <th>Item</th>
-                    <th>Quantidade</th>
-                    <th>Valor Unitário</th>
-                    <th>Total</th>
-                    <th>Ação</th>
-                </tr>
-            </thead>
-            <tbody id="itemList">
-                <!-- Itens adicionados serão exibidos aqui -->
-            </tbody>
-            <tfoot>
-                <tr>
-                    <td colspan="3"><strong>Valor Total:</strong></td>
-                    <td colspan="2" id="grandTotal">R$ 0.00</td>
-                </tr>
-            </tfoot>
-        </table>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Item</th>
+                        <th>Qtd</th>
+                        <th>Unit.</th>
+                        <th>Total</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody id="itemList"></tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="3"><strong>Total Geral:</strong></td>
+                        <td colspan="2" id="grandTotal">R$ 0.00</td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
     </div>
-
-
-
+    <script src="./script.js"></script>
 </body>
-<script src="./script.js"></script>
-
 </html>

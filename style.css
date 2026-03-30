@@ -1,235 +1,52 @@
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Segoe UI', sans-serif;
     display: flex;
     justify-content: center;
-    align-items: center;
+    padding: 20px;
+    margin: 0;
     min-height: 100vh;
-    padding-top: 20px;
-    background-color: #218838;
-    background: url(./img/mercado.jpg);
+    background: url('https://images.unsplash.com/photo-1542838132-92c53300491e?q=80&w=1920') no-repeat center center fixed;
     background-size: cover;
-
-
 }
-
-
-
-.foto {
-
-    z-index: -1;
-    position: absolute;
-    height: 100vh;
-    width: 100vw;
-    bottom: 0;
-    left: 0;
-    top: 0;
-    right: 0;
-
-
-
-
-}
-
-
 
 .container {
     width: 100%;
     max-width: 600px;
-    background: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    background-color: gray;
-    background-size: contain;
-
-
-
-
-
+    background-color: rgba(255, 255, 255, 0.95);
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(5px);
 }
 
-h2 {
-    text-align: center;
-    color: #333;
+h2 { text-align: center; color: #1a73e8; margin-top: 0; }
+
+.input-group { display: flex; gap: 8px; margin-bottom: 15px; }
+
+select, input { padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px; }
+select { flex: 3; background: white; cursor: pointer; }
+input#quantity { flex: 1; min-width: 60px; }
+input#unitPrice { flex: 2; }
+
+.caixa { display: flex; gap: 10px; margin-bottom: 20px; }
+
+button { padding: 12px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; color: white; transition: 0.2s; }
+.add-btn { background-color: #28a745; flex: 2; }
+.clear-btn { background-color: #dc3545; flex: 1; }
+.download-btn { background-color: #007bff; flex: 1; }
+
+.table-container { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; }
+th { background: #f8f9fa; padding: 12px; border-bottom: 2px solid #dee2e6; }
+td { padding: 12px; text-align: center; border-bottom: 1px solid #eee; font-size: 14px; }
+
+.td-actions { display: flex; gap: 5px; justify-content: center; }
+.edit-btn { background-color: #ffc107; color: #333; padding: 6px 10px; font-size: 16px; }
+.remove-btn { background-color: #dc3545; padding: 6px 10px; font-size: 16px; }
+
+@media (max-width: 500px) {
+    .input-group { flex-direction: column; }
+    .caixa { flex-wrap: wrap; }
+    .add-btn { flex: 100%; }
+    th, td { font-size: 12px; padding: 8px 4px; }
 }
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-}
-
-th,
-td {
-    padding: 10px;
-    text-align: center;
-    border-bottom: 1px solid #ddd;
-    
-}
-
-td{
-    color: white;
-}
-
-th {
-    background-color: #f2f2f2;
-}
-
-
-.input-group {
-    display: flex;
-    gap: 10px;
-    margin-top: 10px;
-}
-
-input[type="text"],
-input[type="number"] {
-    padding: 8px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    width: 100%;
-    
-}
-
-.add-btn,
-.clear-btn,.download-btn {
-    padding: 10px;
-    background-color: #28a745;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    width: 100%;
-    margin-top: 10px;
-}
-
-.add-btn:hover {
-    background-color: #218838;
-}
-
-.clear-btn {
-    background-color: #dc3545;
-}
-
-.clear-btn:hover {
-    background-color: #c82333;
-}
-
-/* Responsivo para Celulares iphone*/
-
-
-
-
-/*Comando para Download*/
-
-.download-btn {
-    background-color: #007bff;
-    border: none;
-    border-radius: 4px;
-    color: #fff;
-    padding: 10px 15px;
-    cursor: pointer;
-    margin-top: 10px;
-}
-
-.download-btn:hover {
-    background-color: #0056b3;
-}
-
-/*alinhar os botoes*/
-
-.caixa{
-    display: flex;
-    gap: 10px;
-}
-
-@media (max-width: 740px) {
-
-    .container {
-        width: 80%;
-        max-width: 600px;
-        background: #fff;
-        padding: 20px;
-        border-radius: 8px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        background-color: gray;
-
-    }
-
-
-    th,
-    td {
-        padding: 5px;
-        text-align: center;
-        border-bottom: 1px solid #ddd;
-        font-size: 10px;
-        border: none;
-
-    }
-}
-
-input[type="text"],
-input[type="number"] {
-    padding: 8px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    width: 100%;
-    padding-left: 5px;
-    font-size: 12px;
-}
-
-.input-group {
-    display: flex;
-    gap: 8px;
-    margin-top: 10px;
-    
-}
-
-.add-btn,
-.clear-btn,.download-btn {
-   padding: 8px;
-    background-color: #28a745;
-    font-size: 12px;
-          
-}
-
-.clear-btn{
-    background-color: #dc3545;
-}
-
-.download-btn{
-    background-color: #007bff;
-}
-
-@media (max-width: 370px) {
-
-    .add-btn,
-.clear-btn,.download-btn {
-   padding: 8px;
-    background-color: #28a745;
-    font-size: 10px;
-          
-}
-
-.clear-btn{
-    background-color: #dc3545;
-}
-
-.download-btn{
-    background-color: #007bff;
-}
-
-
-
-input[type="text"],
-input[type="number"] {
-    padding: 6px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    width: 100%;
-    padding-left: 4px;
-    font-size: 11px;
-}
-
-}
-
