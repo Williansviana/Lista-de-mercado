@@ -1,138 +1,111 @@
-// Função para carregar a lista do localStorage quando a página é carregada
-document.addEventListener('DOMContentLoaded', () => {
-    carregarLista();
-});
+document.addEventListener('DOMContentLoaded', carregarLista);
 
 function addItem() {
-    const itemName = document.getElementById("item").value;
+    const itemSelect = document.getElementById("item");
+    const itemName = itemSelect.value;
     const quantity = parseFloat(document.getElementById("quantity").value);
     const unitPrice = parseFloat(document.getElementById("unitPrice").value);
 
     if (itemName && quantity > 0 && unitPrice >= 0) {
-        const total = quantity * unitPrice;
-        const tableRow = document.createElement("tr");
+        const item = {
+            id: Date.now(), // ID único para evitar erros na edição
+            itemName,
+            quantity,
+            unitPrice
+        };
 
-        tableRow.innerHTML = `
-            <td>${itemName}</td>
-            <td>${quantity}</td>
-            <td>R$ ${unitPrice.toFixed(2)}</td>
-            <td>R$ ${total.toFixed(2)}</td>
-            <td><button onclick="removeItem(this, ${total})">Remover</button></td>
-        `;
-
-        document.getElementById("itemList").appendChild(tableRow);
-        updateGrandTotal(total);
-
-        // Salva o item no localStorage
-        salvarNoLocalStorage(itemName, quantity, unitPrice);
-
-        // Limpar os campos após adicionar
-        document.getElementById("item").value = "";
+        salvarNoLocalStorage(item);
+        renderizarItem(item);
+        
+        // Resetar campos
+        itemSelect.selectedIndex = 0;
         document.getElementById("quantity").value = 1;
         document.getElementById("unitPrice").value = "";
+        itemSelect.focus();
     } else {
-        alert("Por favor, preencha todos os campos corretamente.");
+        alert("Por favor, selecione um item e informe os valores.");
     }
 }
 
-function salvarNoLocalStorage(itemName, quantity, unitPrice) {
-    const lista = JSON.parse(localStorage.getItem("listaDeCompras")) || [];
-    lista.push({ itemName, quantity, unitPrice });
+function renderizarItem(item) {
+    const total = item.quantity * item.unitPrice;
+    const tableRow = document.createElement("tr");
+    tableRow.setAttribute('data-id', item.id);
+
+    tableRow.innerHTML = `
+        <td>${item.itemName}</td>
+        <td>${item.quantity}</td>
+        <td>R$ ${item.unitPrice.toFixed(2)}</td>
+        <td>R$ ${total.toFixed(2)}</td>
+        <td class="td-actions">
+            <button class="edit-btn" onclick="editItem(${item.id})">✏️</button>
+            <button class="remove-btn" onclick="removeItem(${item.id})">🗑️</button>
+        </td>
+    `;
+    document.getElementById("itemList").appendChild(tableRow);
+    atualizarTotalGeral();
+}
+
+function editItem(id) {
+    let lista = JSON.parse(localStorage.getItem("listaDeCompras")) || [];
+    const item = lista.find(i => i.id === id);
+    if (item) {
+        const novaQtd = prompt(`Nova quantidade para ${item.itemName}:`, item.quantity);
+        if (novaQtd !== null && !isNaN(novaQtd) && novaQtd > 0) {
+            item.quantity = parseFloat(novaQtd);
+            localStorage.setItem("listaDeCompras", JSON.stringify(lista));
+            refreshUI();
+        }
+    }
+}
+
+function removeItem(id) {
+    let lista = JSON.parse(localStorage.getItem("listaDeCompras")) || [];
+    lista = lista.filter(item => item.id !== id);
     localStorage.setItem("listaDeCompras", JSON.stringify(lista));
+    refreshUI();
+}
+
+function atualizarTotalGeral() {
+    const lista = JSON.parse(localStorage.getItem("listaDeCompras")) || [];
+    const total = lista.reduce((acc, item) => acc + (item.quantity * item.unitPrice), 0);
+    document.getElementById("grandTotal").textContent = "R$ " + total.toFixed(2);
+}
+
+function refreshUI() {
+    document.getElementById("itemList").innerHTML = "";
+    carregarLista();
 }
 
 function carregarLista() {
     const lista = JSON.parse(localStorage.getItem("listaDeCompras")) || [];
-    lista.forEach(item => {
-        const total = item.quantity * item.unitPrice;
-        const tableRow = document.createElement("tr");
-
-        tableRow.innerHTML = `
-            <td>${item.itemName}</td>
-            <td>${item.quantity}</td>
-            <td>R$ ${item.unitPrice.toFixed(2)}</td>
-            <td>R$ ${total.toFixed(2)}</td>
-            <td><button onclick="removeItem(this, ${total})">Remover</button></td>
-        `;
-
-        document.getElementById("itemList").appendChild(tableRow);
-        updateGrandTotal(total);
-    });
+    lista.forEach(renderizarItem);
 }
 
-function removeItem(button, itemTotal) {
-    const row = button.parentElement.parentElement;
-    const itemName = row.cells[0].textContent;
-    row.remove();
-    updateGrandTotal(-itemTotal);
-
-    // Remove o item do localStorage
-    removerDoLocalStorage(itemName);
-}
-
-function removerDoLocalStorage(itemName) {
-    let lista = JSON.parse(localStorage.getItem("listaDeCompras")) || [];
-    lista = lista.filter(item => item.itemName !== itemName);
+function salvarNoLocalStorage(item) {
+    const lista = JSON.parse(localStorage.getItem("listaDeCompras")) || [];
+    lista.push(item);
     localStorage.setItem("listaDeCompras", JSON.stringify(lista));
 }
 
-function updateGrandTotal(change) {
-    const grandTotalElem = document.getElementById("grandTotal");
-    let currentTotal = parseFloat(grandTotalElem.textContent.replace("R$", "").replace(",", "."));
-    const updatedTotal = currentTotal + change;
-    grandTotalElem.textContent = "R$ " + updatedTotal.toFixed(2);
-}
-
 function clearList() {
-    document.getElementById("itemList").innerHTML = "";
-    document.getElementById("grandTotal").textContent = "R$ 0.00";
-    localStorage.removeItem("listaDeCompras");
+    if(confirm("Deseja apagar toda a lista?")) {
+        localStorage.removeItem("listaDeCompras");
+        refreshUI();
+    }
 }
-
-// Download pdf 
 
 function downloadPDF() {
-    // Inicializar o jsPDF
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
-
-    // Título do PDF
-    doc.setFontSize(18);
-    doc.text("Lista de Compras", 10, 10);
-
-    // Configurações de posição para a tabela
+    doc.text("Minha Lista de Compras", 10, 10);
     let y = 20;
-    doc.setFontSize(12);
-
-    // Cabeçalhos da tabela
-    doc.text("Item", 10, y);
-    doc.text("Quantidade", 60, y);
-    doc.text("Valor Unitário", 110, y);
-    doc.text("Total", 160, y);
-
-    y += 10;
-
-    // Adicionar os itens da lista ao PDF
-    const rows = document.querySelectorAll("#itemList tr");
-    rows.forEach((row) => {
-        const columns = row.querySelectorAll("td");
-        if (columns.length === 5) { // Se tem 5 colunas (excluindo o botão)
-            doc.text(columns[0].textContent, 10, y);  // Nome do item
-            doc.text(columns[1].textContent, 60, y);  // Quantidade
-            doc.text(columns[2].textContent, 110, y); // Valor Unitário
-            doc.text(columns[3].textContent, 160, y); // Total
-            y += 10;
-        }
+    const lista = JSON.parse(localStorage.getItem("listaDeCompras")) || [];
+    lista.forEach(item => {
+        const total = item.quantity * item.unitPrice;
+        doc.text(`${item.itemName} - ${item.quantity}x R$${item.unitPrice.toFixed(2)} = R$${total.toFixed(2)}`, 10, y);
+        y += 10;
     });
-
-    // Adicionar o valor total geral ao PDF
-    const grandTotal = document.getElementById("grandTotal").textContent;
-    y += 10;
-    doc.setFontSize(14);
-    doc.text("Valor Total:", 110, y);
-    doc.text(grandTotal, 160, y);
-
-    // Salvar o PDF
-    doc.save("Lista_de_Compras.pdf");
+    doc.text(`Total: ${document.getElementById("grandTotal").textContent}`, 10, y + 10);
+    doc.save("lista-viana.pdf");
 }
-
